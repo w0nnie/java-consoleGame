@@ -5,7 +5,7 @@ import pokemon.Pokemon;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// 테스트 1
 public class Player {
     private String name;
     private int hp;
