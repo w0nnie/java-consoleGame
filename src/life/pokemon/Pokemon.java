@@ -33,11 +33,7 @@ public class Pokemon implements Skill{
 
     @Override
     public String toString() {
-        return "Pokemon{" +
-                "name='" + name + '\'' +
-                ", hp=" + hp +
-                ", type=" + type +
-                '}';
+        return "이름 : " + name + " | 체력 : " + hp + " | 속성 : " + type;
     }
 
     @Override
