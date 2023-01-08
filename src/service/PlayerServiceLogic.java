@@ -9,6 +9,8 @@ import life.pokemon.Pokemon;
 import life.pokemon.Pyree;
 import shop.Shop;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PlayerServiceLogic implements PlayerService {
@@ -61,26 +63,6 @@ public class PlayerServiceLogic implements PlayerService {
         }
     }
 
-    private int selectPokemon() {
-        int selectNum = 0;
-        System.out.println("시작 포켓몬을 골라주세요.");
-        System.out.println("1. 피카츄 | 2. 파이리 | 3. 꼬부기");
-        selectNum = scanner.nextInt();
-        if(selectNum >= 1 && selectNum <= 3) {
-            return selectNum;
-        } else {
-            System.out.println("잘못된 선택입니다.");
-            return 0;
-        }
-
-    }
-
-    private void showStory() {
-        System.out.println("시작 스토리 출력...");
-        System.out.println();
-        System.out.println();
-    }
-
     @Override
     public void loadGame() {
 
@@ -97,24 +79,9 @@ public class PlayerServiceLogic implements PlayerService {
         System.out.println("-------------------------------------------------");
         System.out.println();
         System.out.println("------------------ << 인벤토리 >> -----------------");
-        int monsterBallCount = 0;
-        int superBallCount = 0;
-        int hyperBallCount = 0;
-        int materBallCount = 0;
-        int elixir = 0;
-        int powerElixir = 0;
-        for(Item item : getInventory().getItems()){
-            switch (item.getName()) {
-                case "몬스터볼" -> monsterBallCount = item.getQuantity();
-                case "수퍼볼" -> superBallCount = item.getQuantity();
-                case "하이퍼볼" -> hyperBallCount = item.getQuantity();
-                case "마스터볼" -> materBallCount = item.getQuantity();
-                case "엘릭서" -> elixir = item.getQuantity();
-                case "파워엘릭서" -> powerElixir = item.getQuantity();
-            }
-        }
-        System.out.printf("[몬스터볼 x%d | 수퍼볼 x%d | 하이퍼볼 x%d | 마스터볼 x%d]\n", monsterBallCount, superBallCount, hyperBallCount, materBallCount);
-        System.out.printf("[엘릭서 x%d | 파워엘릭서 x%d]\n", elixir, powerElixir);
+        List<Integer> counts = countItems(getInventory().getItems());
+        System.out.printf("[몬스터볼 x%d | 수퍼볼 x%d | 하이퍼볼 x%d | 마스터볼 x%d]\n", counts.get(0), counts.get(1), counts.get(2), counts.get(3));
+        System.out.printf("[엘릭서 x%d | 파워엘릭서 x%d]\n", counts.get(4), counts.get(5));
         System.out.println("-------------------------------------------------");
         for(Pokemon pokemon : getInventory().getPokemons()) {
             System.out.println(pokemon);
@@ -124,10 +91,19 @@ public class PlayerServiceLogic implements PlayerService {
         System.out.println();
     }
 
+    private List<Integer> countItems(List<Item> items){
+        List<Integer> counts = new ArrayList<>();
+        for(Item item : items){
+            counts.add(item.getQuantity());
+        }
+
+        return counts;
+    }
+
     @Override
     public void shopping() {
         Shop shop = new Shop();
-        shop.displayShopItemList();
+        shop.shopping();
     }
 
     @Override
@@ -143,11 +119,69 @@ public class PlayerServiceLogic implements PlayerService {
     @Override
     public void relax() {
 
+        while(true) {
+            System.out.println();
+            System.out.println();
+            System.out.println("휴식의 방에 입장하셨습니다.");
+            int selectNumber = selectRelax();
+            switch (selectNumber) {
+                case 1:
+                    whichRelax("의자", 20, 500, 3000);
+                    break;
+                case 2:
+                    whichRelax("침대", 40, 1000, 5000);
+                    break;
+                case 3:
+                    whichRelax("사우나", 100, 2000, 10000);
+                    break;
+                case 0:
+                    return;
+                default:
+                    break;
+
+            }
+        }
+
+    }
+
+    private void whichRelax(String which, int increaseHp, int price, int time){
+        System.out.println();
+        System.out.println();
+        System.out.printf("지우가 %s에서 휴식을 합니다...\n", which);
+        getPlayer().setHp(getPlayer().getHp() + increaseHp);
+        getPlayer().setMoney(getPlayer().getMoney() - price);
+        try {
+            int sec = time / 1000;
+            for(int i=sec; i>0; i--) {
+                System.out.println(i);
+                Thread.sleep(1000);
+            }
+            System.out.println("휴식을 끝마쳤습니다.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.printf("현재 HP : %d\n", getPlayer().getHp());
     }
 
     @Override
     public void saveGame() {
 
+    }
+
+    public boolean isAlreadyStarted() {
+        return isAlreadyStarted;
+    }
+
+    public void setAlreadyStarted(boolean alreadyStarted) {
+        isAlreadyStarted = alreadyStarted;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     private boolean initialize(){
@@ -165,19 +199,41 @@ public class PlayerServiceLogic implements PlayerService {
         }
     }
 
-    public boolean isAlreadyStarted() {
-        return isAlreadyStarted;
+    private int selectPokemon() {
+        int selectNum = 0;
+        System.out.println("시작 포켓몬을 골라주세요.");
+        System.out.println("1. 피카츄 | 2. 파이리 | 3. 꼬부기");
+        selectNum = scanner.nextInt();
+        if(selectNum >= 1 && selectNum <= 3) {
+            return selectNum;
+        } else {
+            System.out.println("잘못된 선택입니다.");
+            return 0;
+        }
+
     }
 
-    public void setAlreadyStarted(boolean alreadyStarted) {
-        isAlreadyStarted = alreadyStarted;
+    private int selectRelax(){
+        int selectNum = 0;
+        while(true) {
+            System.out.println("어떤 휴식을 할지 선택해주세요.");
+            System.out.println("1. 앉기, 가격 : 500, 소요시간 : 3초, HP 회복량 : 20");
+            System.out.println("2. 눕기, 가격 : 1000, 소요시간 : 5초, HP 회복량 : 40");
+            System.out.println("3. 사우나, 가격 : 2000, 소요시간 : 10초, HP 회복량 : 100");
+            System.out.println("0. 돌아가기");
+            selectNum = scanner.nextInt();
+            if(selectNum >= 0 && selectNum <= 3){
+                return selectNum;
+            } else {
+                System.out.println("잘못된 선택입니다.");
+                return -1;
+            }
+        }
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public Inventory getInventory() {
-        return inventory;
+    private void showStory() {
+        System.out.println("시작 스토리 출력...");
+        System.out.println();
+        System.out.println();
     }
 }
