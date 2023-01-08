@@ -1,4 +1,4 @@
-package item.potion;
+package inventory.item.potion;
 
 public class PowerElixir extends Potion {
 

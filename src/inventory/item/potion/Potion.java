@@ -1,6 +1,6 @@
-package item.potion;
+package inventory.item.potion;
 
-import item.Item;
+import inventory.item.Item;
 
 public class Potion extends Item {
     private int increaseHp;

@@ -1,4 +1,4 @@
-package item.ball;
+package inventory.item.ball;
 
 public class MasterBall extends MonsterBall{
 

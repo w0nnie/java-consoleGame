@@ -1,4 +1,4 @@
-package pokemon;
+package life.pokemon;
 
 public interface Skill {
 

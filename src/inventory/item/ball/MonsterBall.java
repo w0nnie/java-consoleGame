@@ -1,6 +1,6 @@
-package item.ball;
+package inventory.item.ball;
 
-import item.Item;
+import inventory.item.Item;
 
 public class MonsterBall extends Item {
 

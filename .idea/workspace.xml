@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="461c338b-dccc-488e-934a-2ac8a0e26e71" name="Changes" comment="리드미 수정">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/inventory/Inventory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/item/Item.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/item/ball/HyperBall.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/item/ball/MasterBall.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/item/ball/MonsterBall.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/item/ball/SuperBall.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/item/potion/Elixir.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/item/potion/Potion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/item/potion/PowerElixir.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/player/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pokemon/Pikachu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pokemon/Pokemon.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pokemon/Skill.java" afterDir="false" />
+    <list default="true" id="461c338b-dccc-488e-934a-2ac8a0e26e71" name="Changes" comment="테스트 1">
+      <change afterPath="$PROJECT_DIR$/src/life/pokemon/Ggobugi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/life/pokemon/Pyree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/life/pokemon/Type.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/PlayerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/PlayerServiceLogic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/UserConsole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/UserMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/item/Item.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item/ball/HyperBall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/item/ball/HyperBall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item/ball/MasterBall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/item/ball/MasterBall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item/ball/MonsterBall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/item/ball/MonsterBall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item/ball/SuperBall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/item/ball/SuperBall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item/potion/Elixir.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/item/potion/Elixir.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item/potion/Potion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/item/potion/Potion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/item/potion/PowerElixir.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inventory/item/potion/PowerElixir.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/life/player/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pokemon/Pikachu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/life/pokemon/Pikachu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pokemon/Pokemon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/life/pokemon/Pokemon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pokemon/Skill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/life/pokemon/Skill.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +34,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -51,6 +58,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/owner/Desktop/KR/STUDY/JAVA/Namusori",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -60,6 +68,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="service" />
       <recent name="ball" />
       <recent name="" />
     </key>
@@ -89,7 +98,16 @@
       <workItem from="1672901755145" duration="1868000" />
       <workItem from="1672903640726" duration="2499000" />
       <workItem from="1672906203936" duration="743000" />
+      <workItem from="1673021866066" duration="16438000" />
     </task>
+    <task id="LOCAL-00001" summary="테스트 1">
+      <created>1673021892263</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1673021892263</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,5 +123,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="테스트 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="테스트 1" />
   </component>
 </project>

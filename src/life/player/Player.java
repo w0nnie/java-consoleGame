@@ -1,24 +1,21 @@
-package player;
+package life.player;
 
 import inventory.Inventory;
-import pokemon.Pokemon;
 
-import java.util.ArrayList;
-import java.util.List;
 // 테스트 1
 public class Player {
     private String name;
     private int hp;
     private int money;
-    private Inventory items;
-    private Inventory pokeballs;
+    private Inventory potions;
+    private Inventory balls;
 
     public Player(String name, int hp){
         this.name = name;
         this.hp = hp;
         this.money = 0;
-        this.items = new Inventory();
-        this.pokeballs = new Inventory();
+        this.potions = new Inventory();
+        this.balls = new Inventory();
     }
 
     public String getName() {
@@ -45,20 +42,20 @@ public class Player {
         this.money = money;
     }
 
-    public Inventory getItems() {
-        return items;
+    public Inventory getPotions() {
+        return potions;
     }
 
-    public void setItems(Inventory items) {
-        this.items = items;
+    public void setPotions(Inventory potions) {
+        this.potions = potions;
     }
 
-    public Inventory getPokeballs() {
-        return pokeballs;
+    public Inventory getBalls() {
+        return balls;
     }
 
-    public void setPokeballs(Inventory pokeballs) {
-        this.pokeballs = pokeballs;
+    public void setBalls(Inventory balls) {
+        this.balls = balls;
     }
 
     @Override
