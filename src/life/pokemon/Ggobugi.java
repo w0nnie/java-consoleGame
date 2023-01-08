@@ -1,10 +1,8 @@
-package pokemon;
+package life.pokemon;
 
-public class Pikachu extends Pokemon {
-
-
-    public Pikachu() {
-        super("피카츄", 100);
+public class Ggobugi extends Pokemon{
+    public Ggobugi() {
+        super("꼬부기", 100, Type.WATER);
     }
 
     @Override

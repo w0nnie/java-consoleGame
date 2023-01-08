@@ -1,6 +1,6 @@
 package inventory;
 
-import item.Item;
+import inventory.item.Item;
 
 import java.util.List;
 

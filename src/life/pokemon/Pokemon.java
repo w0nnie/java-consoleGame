@@ -1,15 +1,14 @@
-package pokemon;
-
-import java.util.ArrayList;
-import java.util.List;
+package life.pokemon;
 
 public class Pokemon implements Skill{
     private String name;
     private int hp;
+    private Type type;
 
-    public Pokemon(String name, int hp){
+    public Pokemon(String name, int hp, Type type){
         this.name = name;
         this.hp = hp;
+        this.type = type;
     }
 
     public String getName() {
@@ -28,11 +27,16 @@ public class Pokemon implements Skill{
         this.hp = hp;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
-        return "pokemon.Pokemon{" +
+        return "Pokemon{" +
                 "name='" + name + '\'' +
                 ", hp=" + hp +
+                ", type=" + type +
                 '}';
     }
 
