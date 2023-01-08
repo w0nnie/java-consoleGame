@@ -12,8 +12,8 @@ public class Player {
 
     public Player(){
         this.name = "지우";
-        this.hp = 100;
-        this.money = 0;
+        this.hp = 50;
+        this.money = 10000;
     }
 
     public static Player getInstance(){
@@ -36,7 +36,12 @@ public class Player {
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        if(hp > 100){
+            System.out.println("HP는 최대 100을 넘을 수 없습니다.");
+            setHp(100);
+        } else {
+            this.hp = hp;
+        }
     }
 
     public int getMoney() {

@@ -4,7 +4,7 @@ public class SuperBall extends Ball{
 
 
     public SuperBall(){
-        this(1);
+        this(0);
     }
     public SuperBall(int quantity) {
         super("수퍼볼", quantity, 2000);

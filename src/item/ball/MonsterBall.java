@@ -5,7 +5,7 @@ import item.Item;
 public class MonsterBall extends Ball {
 
     public MonsterBall(){
-        this(1);
+        this(0);
     }
 
     public MonsterBall(int quantity) {

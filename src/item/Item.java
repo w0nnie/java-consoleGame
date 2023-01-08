@@ -19,8 +19,12 @@ public abstract class Item {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void increaseQuantity() {
+        this.quantity += 1;
+    }
+
+    public void decreaseQuantity(){
+        this.quantity -= 1;
     }
 
     public int getPrice() {

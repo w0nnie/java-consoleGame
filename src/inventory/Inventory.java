@@ -1,6 +1,12 @@
 package inventory;
 
 import item.Item;
+import item.ball.HyperBall;
+import item.ball.MasterBall;
+import item.ball.MonsterBall;
+import item.ball.SuperBall;
+import item.potion.Elixir;
+import item.potion.PowerElixir;
 import life.pokemon.Pokemon;
 
 import java.util.ArrayList;
@@ -14,6 +20,7 @@ public class Inventory {
     public Inventory(){
         this.items = new ArrayList<>();
         this.pokemons = new ArrayList<>();
+        initializeInventory();
     }
 
     public static Inventory getInstance(){
@@ -37,5 +44,14 @@ public class Inventory {
 
     public void setPokemons(Pokemon pokemon) {
         pokemons.add(pokemon);
+    }
+
+    private void initializeInventory(){
+        items.add(new MonsterBall());
+        items.add(new SuperBall());
+        items.add(new HyperBall());
+        items.add(new MasterBall());
+        items.add(new Elixir());
+        items.add(new PowerElixir());
     }
 }
