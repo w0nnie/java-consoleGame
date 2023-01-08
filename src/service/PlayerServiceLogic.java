@@ -1,7 +1,9 @@
 package service;
 
+import capture.Capture;
 import inventory.Inventory;
 import item.Item;
+import item.ball.*;
 import life.player.Player;
 import life.pokemon.Ggobugi;
 import life.pokemon.Pikachu;
@@ -11,7 +13,7 @@ import shop.Shop;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class PlayerServiceLogic implements PlayerService {
     private boolean isAlreadyStarted;
@@ -107,13 +109,107 @@ public class PlayerServiceLogic implements PlayerService {
     }
 
     @Override
-    public void catchMon() {
+    public boolean catchMon() {
+        //몬스터볼의 개수가 1개 이상일경우 해당 메뉴 진입가능
+        Map<String, Item> ballCheck = new HashMap<>() {{ //HashMap 선언
+            put("마스터볼", null);
+            put("몬스터볼", null);
+            put("수퍼볼", null);
+            put("하이퍼볼", null);
+        }};
 
+        List<Item> items = Inventory.getInstance().getItems();
+        for (int i = 0; i < items.size(); i++) {
+            Item ball = items.get(i);
+            if(ball instanceof Ball){
+                ballCheck.put(ball.getName(), ball);
+            }
+        }
+        int ballCount = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        Iterator<String> iter = ballCheck.keySet().iterator();
+        while(iter.hasNext()) {
+            String key = iter.next();
+            Item ball = ballCheck.get(key);
+            int qa = 0;
+            if(ball != null){
+                qa = ball.getQuantity();
+                if(qa !=0){
+                    ballCount ++;
+                }
+
+            }
+            stringBuilder.append(String.format("%s x %d",key, qa));
+        }
+
+        if(ballCount == 0){
+            System.out.println("보유하신 몬스터볼이 없습니다.");
+            return false;
+        }
+        System.out.println(stringBuilder);
+        Capture capture = new Capture(true);
+
+        //포획하는 방법 설명
+
+        System.out.println("포켓몬을 찾는중 . . . ");
+        List<Pokemon> list = Arrays.asList(new Pikachu(), new Ggobugi(), new Pyree()); //포켓몬 랜덤 발생
+        Collections.shuffle(list); //collections 라이버르리 shuffle 메서드
+        Pokemon pokemon = new Pokemon(list.get(0).getName(), list.get(0).getHp(), list.get(0).getType());
+        System.out.println("야생의 " + pokemon.getName() +"이 나타났다.");
+        System.out.println(pokemon.toString()); // 포켓몬 정보 출력
+
+        // 포획하기 (인벤토리 사용가능한 볼x개수 리스트 출력)
+        System.out.println();
+        System.out.println();
+        System.out.println("========================= 사용자 ui =========================");
+        System.out.println("1. 싸우기");
+        System.out.println("2. 인벤토리");
+        System.out.println("3. 도망치기");
+        System.out.println("=============================================================");
+
+        Scanner sc = new Scanner(System.in);
+
+        while(true){
+            try{
+                int userChoose = sc.nextInt();
+                switch (userChoose){
+                    case 1:
+                        System.out.println("싸우기");
+                        break;
+                    case 2:
+                        //인벤토리 ui 따로 뺴기 .. 시간되면
+                        System.out.println("------------------ << 인벤토리 >> -----------------");
+                        List<Integer> counts = countItems(getInventory().getItems());
+                        System.out.printf("[몬스터볼 x%d | 수퍼볼 x%d | 하이퍼볼 x%d | 마스터볼 x%d]\n", counts.get(0), counts.get(1), counts.get(2), counts.get(3));
+                        System.out.println("-------------------------------------------------");
+                        //1개이상 보유중인 몬스터볼 인덱스 순으로 선택가능하게
+                        break;
+
+                    case 3:
+                        System.out.println("호 다 닥 . . .");
+                        //Thread sleep
+                        return false;
+                    default:
+                        System.out.println("메뉴를 잘못 입력하셨습니다.");
+                }
+            }catch (NullPointerException e){
+                System.out.println("다시 입력해주세요.");
+            }
+        }
+        //인벤토리 선택시 표출되는 부분
+
+//        Ball ball = null;
+//        pokemon.setHp(50);
+//        int hp = pokemon.getHp();
+
+        //턴제 방식 전투 및 몬스터볼(hp 양으로 차등)
+        //결과( 포획 or
+//        capture.getCaptureResult(ball, pokemon, hp); // 인자안에 몬스터볼 종류
     }
 
     @Override
     public void fight() {
-
     }
 
     @Override

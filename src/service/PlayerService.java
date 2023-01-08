@@ -5,7 +5,7 @@ public interface PlayerService {
     void loadGame();
     void myPage();
     void shopping();
-    void catchMon();
+    boolean catchMon();
     void fight();
     void relax();
     void saveGame();
