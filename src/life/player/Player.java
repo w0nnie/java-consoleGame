@@ -4,18 +4,23 @@ import inventory.Inventory;
 
 // 테스트 1
 public class Player {
+    private static Player playerInstance;
     private String name;
     private int hp;
     private int money;
-    private Inventory potions;
-    private Inventory balls;
+    private Inventory inventory = Inventory.getInstance();
 
-    public Player(String name, int hp){
-        this.name = name;
-        this.hp = hp;
+    public Player(){
+        this.name = "지우";
+        this.hp = 100;
         this.money = 0;
-        this.potions = new Inventory();
-        this.balls = new Inventory();
+    }
+
+    public static Player getInstance(){
+        if(playerInstance == null){
+            playerInstance = new Player();
+        }
+        return playerInstance;
     }
 
     public String getName() {
@@ -40,22 +45,6 @@ public class Player {
 
     public void setMoney(int money) {
         this.money = money;
-    }
-
-    public Inventory getPotions() {
-        return potions;
-    }
-
-    public void setPotions(Inventory potions) {
-        this.potions = potions;
-    }
-
-    public Inventory getBalls() {
-        return balls;
-    }
-
-    public void setBalls(Inventory balls) {
-        this.balls = balls;
     }
 
     @Override

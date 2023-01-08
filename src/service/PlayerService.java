@@ -4,7 +4,7 @@ public interface PlayerService {
     void newGame();
     void loadGame();
     void myPage();
-    void shop();
+    void shopping();
     void catchMon();
     void fight();
     void relax();
