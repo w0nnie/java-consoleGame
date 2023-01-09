@@ -4,12 +4,14 @@ import capture.Capture;
 import inventory.Inventory;
 import item.Item;
 import item.ball.*;
+import life.player.Enemy;
 import life.player.Player;
 import life.pokemon.Ggobugi;
 import life.pokemon.Pikachu;
 import life.pokemon.Pokemon;
 import life.pokemon.Pyree;
 import shop.Shop;
+import ui.UserMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +150,6 @@ public class PlayerServiceLogic implements PlayerService {
             return false;
         }
 //        System.out.println(stringBuilder); // 몬스터볼 몇개 있느지 담아 놓으 stringBuilder
-        Capture capture = new Capture(true);
 
         //포획하는 방법 설명
 
@@ -183,7 +184,7 @@ public class PlayerServiceLogic implements PlayerService {
                 switch (userChoose){
                     case 1:
                         captureFight(pokemon);
-                        break;
+                        return true;
                     case 2:
                         System.out.println("호 다 닥 . . .");
                         //Thread sleep
@@ -195,15 +196,115 @@ public class PlayerServiceLogic implements PlayerService {
                 System.out.println("다시 입력해주세요.");
             }
         }
-        //인벤토리 선택시 표출되는 부분
-
-        //턴제 방식 전투 및 몬스터볼(hp 양으로 차등)
-        //결과( 포획 or
-//        capture.getCaptureResult(ball, pokemon, hp); // 인자안에 몬스터볼 종류
     }
 
     @Override
     public void fight() {
+        int i=0;
+        int j=0;
+        try{
+            System.out.println("로켓단을 찾는중 . . .");
+            Thread.sleep(3000);
+            Enemy enemy = new Enemy("로사");
+            enemy.addPokemon(new Pyree());
+            enemy.addPokemon(new Ggobugi());
+            System.out.println(enemy.getName() + "(이)가 싸움을 걸어온다.");
+            int turn = 0;
+            while(true) {
+                if (turn == 0) {
+                    System.out.println("======메뉴를 선택해주세요=====");
+                    System.out.println("1. 대결한다.");
+                    System.out.println("2. 포기한다.");
+                    System.out.print(":");
+                    int menu = scanner.nextInt();
+                    System.out.println();
+
+                    if (menu == 1) {
+
+                        while (true) {
+
+                            Pokemon myPokemon = inventory.getPokemons().get(i);
+                            Pokemon enemyPokemon = enemy.getPokemons().get(j);
+
+                            if (myPokemon.getHp() <= 0) {
+                                System.out.println("****" + player.getName() + "의" + myPokemon.getName() + "이(가) 졌습니다.");
+
+                                if (i < inventory.getPokemons().size() - 1) { // 내 포켓몬이 더 있는지 체크
+                                    i++;
+                                    continue;
+                                } else {
+                                    System.out.println(enemy.getName() +" 에게 패배하였습니다.");
+                                    i = 0;
+                                    j = 0;
+                                    break;
+                                }
+                            } else if (enemyPokemon.getHp() <= 0) {
+                                System.out.println("****" + enemy.getName() + "의" + enemyPokemon.getName() + "이(가) 졌습니다.");
+                                for (int k = 0; k < enemy.getPokemons().size(); k++) {
+                                    enemy.getPokemons().get(k).setHp(100);
+                                }
+
+                                if (j < enemy.getPokemons().size() - 1) { // 로켓단 포켓몬이 더 있는지 체크
+                                    j++;
+                                    continue;
+                                } else {
+                                    System.out.println(enemy.getName() + "에게 승리하였습니다.");
+                                    i = 0;
+                                    j = 0;
+                                    break;
+                                }
+                            } else if (inventory.getPokemons().isEmpty() || enemy.getPokemons().isEmpty())
+                                break;
+                            System.out.println();
+                            System.out.println("<" + enemy.getName() + "(와)과 배틀을 시작합니다>");
+                            System.out.println();
+                            System.out.print(myPokemon.getName() + "의 현재HP: " + myPokemon.getHp() + "  ");
+                            System.out.println(enemyPokemon.getName() + "의 현재HP: " + enemyPokemon.getHp());
+                            System.out.println();
+                            System.out.println("*" + player.getName() + "의 차례");
+//                            System.out.println("0번:아이템");
+                            myPokemon.printSkills();
+
+                            System.out.print("몇번 스킬을 사용할까요??\n:");
+
+                            int sk = scanner.nextInt();
+                            if (sk == 1) {
+                                myPokemon.skill1(enemyPokemon);
+                            } else if (sk == 2) {
+                                myPokemon.skill2(enemyPokemon);
+                            } else {
+                                myPokemon.skill3(enemyPokemon);
+                            }
+//                            else if(sk==0) {
+//                                if(inventory.getItems().size()==0) {
+//                                    System.out.println("*현재 보유한 아이템이 없습니다");
+//                                }else {
+//                                    inventory.getItems().get(0).useItem(yours);
+//                                }
+//                            }
+                            System.out.println("*" + enemy.getName() + "의 차례");
+                            int random = (int) (Math.random() * 3 + 1);
+                            if (random == 1) {
+                                enemyPokemon.skill1(myPokemon);
+                            } else if (random == 2) {
+                                enemyPokemon.skill2(myPokemon);
+                            } else {
+                                enemyPokemon.skill3(myPokemon);
+                            }
+                        }
+                    }else if(menu == 2){
+                        System.out.println("도망쳐!!!");
+                        return;
+                    }else{
+                        System.out.println("잘못된 메뉴입니다.");
+                        break;
+                    }
+                }
+                break;
+            }
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -230,7 +331,7 @@ public class PlayerServiceLogic implements PlayerService {
                 myPokemon.skill2(wildPokemon);
             } else if (select == 0) {
                 //인벤토리
-                whichItem();
+                whichItem(wildPokemon ,wildPokemon.getHp());
                 break;
 
             }
@@ -249,9 +350,7 @@ public class PlayerServiceLogic implements PlayerService {
             }
         }
     }
-
-    private void whichItem() {
-        int select;
+    private void whichItem(Pokemon pokemon, int hp) {
         List<Integer> counts = countItems(getInventory().getItems());
         System.out.println("------------------ << 인벤토리 >> -----------------");
         System.out.printf("[몬스터볼 x%d | 수퍼볼 x%d | 하이퍼볼 x%d | 마스터볼 x%d]\n", counts.get(0), counts.get(1), counts.get(2), counts.get(3));
@@ -261,7 +360,7 @@ public class PlayerServiceLogic implements PlayerService {
         for (int i = 1; i <= inventory.getItems().size() ; i++) {
             System.out.println(i + "번 : "  + inventory.getItems().get(i-1).getName());
         }
-        while (true){
+        loop1: while (true){
             int select2 = scanner.nextInt();
             switch (select2){
                 case 1:
@@ -269,25 +368,30 @@ public class PlayerServiceLogic implements PlayerService {
                         System.out.println();
                         System.out.println("보유하신 몬스터볼이 없습니다.");
                         System.out.println();
-                        whichItem();
+                        whichItem(pokemon, hp);
                         return;
                     }else{
-                        System.out.printf("%s(을)를 사용하시겠습니까?( Y / N )", inventory.getItems().get(0).getName());
-                        String yesOrNo = scanner.nextLine();
-                        System.out.println("yesOrNo = " + yesOrNo);
-                        if(yesOrNo.toLowerCase().equals("y")){
-                            System.out.println("몬스터볼을 사용합니다.");
+                        System.out.println("몬스터볼을 사용합니다.");
+                        inventory.getItems().get(0).decreaseQuantity();
+                        Capture capture = new Capture();
+                        boolean tr =  capture.getCaptureResult(new MonsterBall(), pokemon, hp); // 인자안에 몬스터볼 종류
+                        if(tr){
+                            //잡힘
+                            inventory.getPokemons().add(pokemon);
+                            System.out.println("==========================================");
+                            System.out.println(pokemon.toString());
+                            break loop1;
                         }else{
+                            System.out.println("놓침");
                             return;
                         }
-                        break;
                     }
                 case 2:
                     if(counts.get(1) == 0){
                         System.out.println();
                         System.out.println("보유하신 수퍼볼이 없습니다.");
                         System.out.println();
-                        whichItem();
+                        whichItem(pokemon, hp);
                         return;
                     }else{
                         System.out.println("수퍼볼을 사용합니다.");
@@ -298,7 +402,7 @@ public class PlayerServiceLogic implements PlayerService {
                         System.out.println();
                         System.out.println("보유하신 하이퍼볼이 없습니다.");
                         System.out.println();
-                        whichItem();
+                        whichItem(pokemon, hp);
                         return;
                     }else{
                         System.out.println("하이퍼볼을 사용합니다.");
@@ -309,7 +413,7 @@ public class PlayerServiceLogic implements PlayerService {
                         System.out.println();
                         System.out.println("보유하신 마스터볼이 없습니다.");
                         System.out.println();
-                        whichItem();
+                        whichItem(pokemon, hp);
                         return;
                     }else{
                         System.out.println("마스터볼을 사용합니다.");
@@ -321,10 +425,11 @@ public class PlayerServiceLogic implements PlayerService {
                         System.out.println();
                         System.out.println("보유하신 엘릭서가 없습니다.");
                         System.out.println();
-                        whichItem();
+                        whichItem(pokemon, hp);
                         return;
                     }else{
                         System.out.println("엘릭서를 사용합니다.");
+                        System.out.println(pokemon.getName());
                         break;
                     }
                 case 6:
@@ -332,7 +437,7 @@ public class PlayerServiceLogic implements PlayerService {
                         System.out.println();
                         System.out.println("보유하신 파워엘릭서가 없습니다.");
                         System.out.println();
-                        whichItem();
+                        whichItem(pokemon, hp);
                         return;
                     }else{
                         System.out.println("파워엘릭서를 사용합니다.");

@@ -9,31 +9,20 @@ import service.PlayerServiceLogic;
 
 public class Capture {
 
-    private boolean trueOrFalse;
+    private boolean trueOrFalse = true;
 
-    public Capture(boolean trueOrFalse) {
-        this.trueOrFalse = trueOrFalse;
-    }
-
-    public void getCaptureResult(Ball ball, Pokemon pokemon, int hp){
+    public boolean getCaptureResult(Ball ball, Pokemon pokemon, int hp){
         System.out.println();
         System.out.println();
         System.out.println("------------------- <<포획결과>> -------------------");
         //선택한 몬스터볼로 분기 처리 실패 성공
-
-        if(ball.getName() == "몬스터볼"  && hp >= 50){
+        System.out.println(pokemon.getName() +" 넌 내꺼야!");
+        System.out.println(pokemon.getName() +"을 잡았씁니다!");
+        if(ball.getName() == "몬스터볼"  && hp > 30){
             trueOrFalse =   false;
-            return;
+            System.out.println("놓쳤습니다.");
+            return trueOrFalse;
         }
-
-        if(trueOrFalse){
-            System.out.println("포획성공");
-            PlayerServiceLogic playerServiceLogic = null;
-            playerServiceLogic.getInventory().setPokemons(pokemon);
-            //인벤토리
-
-        }else{
-            System.out.println("놓침");
-        }
+        return trueOrFalse;
     }
 }
