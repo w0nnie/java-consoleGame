@@ -37,17 +37,18 @@ public class Pokemon implements Skill{
     }
 
     @Override
-    public void skill1(Pokemon pokemon) {
+    public void printSkills() {
+    }
 
+    @Override
+    public void skill1(Pokemon pokemon) {
     }
 
     @Override
     public void skill2(Pokemon pokemon) {
-
     }
 
     @Override
     public void skill3(Pokemon pokemon) {
-
     }
 }

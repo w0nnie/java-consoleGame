@@ -6,6 +6,12 @@ public class Ggobugi extends Pokemon{
     }
 
     @Override
+    public void printSkills() {
+        String skillNames = "1번:덩굴채찍\n2번:김밥말이\n";
+        System.out.print(skillNames);
+    }
+
+    @Override
     public void skill1(Pokemon pokemon) {
         useSkill("%s(이)가 스킬1을 사용했습니다.\n", pokemon, 10);
     }

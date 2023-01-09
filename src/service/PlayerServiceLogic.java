@@ -147,25 +147,32 @@ public class PlayerServiceLogic implements PlayerService {
             System.out.println("보유하신 몬스터볼이 없습니다.");
             return false;
         }
-        System.out.println(stringBuilder);
+//        System.out.println(stringBuilder); // 몬스터볼 몇개 있느지 담아 놓으 stringBuilder
         Capture capture = new Capture(true);
 
         //포획하는 방법 설명
 
         System.out.println("포켓몬을 찾는중 . . . ");
         List<Pokemon> list = Arrays.asList(new Pikachu(), new Ggobugi(), new Pyree()); //포켓몬 랜덤 발생
-        Collections.shuffle(list); //collections 라이버르리 shuffle 메서드
-        Pokemon pokemon = new Pokemon(list.get(0).getName(), list.get(0).getHp(), list.get(0).getType());
-        System.out.println("야생의 " + pokemon.getName() +"이 나타났다.");
+        Collections.shuffle(list); //collections shuffle 메서드
+        Pokemon pokemon = null;
+        System.out.println();
+        String name = list.get(0).getName();
+        if(name =="꼬부기"){
+             pokemon = new Ggobugi();
+        }else if(name =="피카츄"){
+             pokemon = new Pikachu();
+        }else{
+            pokemon = new Pyree();
+        }
+        System.out.println("야생의 " + pokemon.getName() +"(이)가 나타났다.");
         System.out.println(pokemon.toString()); // 포켓몬 정보 출력
 
         // 포획하기 (인벤토리 사용가능한 볼x개수 리스트 출력)
         System.out.println();
-        System.out.println();
         System.out.println("========================= 사용자 ui =========================");
         System.out.println("1. 싸우기");
-        System.out.println("2. 인벤토리");
-        System.out.println("3. 도망치기");
+        System.out.println("2. 도망치기");
         System.out.println("=============================================================");
 
         Scanner sc = new Scanner(System.in);
@@ -175,18 +182,9 @@ public class PlayerServiceLogic implements PlayerService {
                 int userChoose = sc.nextInt();
                 switch (userChoose){
                     case 1:
-                        System.out.println("싸우기");
+                        captureFight(pokemon);
                         break;
                     case 2:
-                        //인벤토리 ui 따로 뺴기 .. 시간되면
-                        System.out.println("------------------ << 인벤토리 >> -----------------");
-                        List<Integer> counts = countItems(getInventory().getItems());
-                        System.out.printf("[몬스터볼 x%d | 수퍼볼 x%d | 하이퍼볼 x%d | 마스터볼 x%d]\n", counts.get(0), counts.get(1), counts.get(2), counts.get(3));
-                        System.out.println("-------------------------------------------------");
-                        //1개이상 보유중인 몬스터볼 인덱스 순으로 선택가능하게
-                        break;
-
-                    case 3:
                         System.out.println("호 다 닥 . . .");
                         //Thread sleep
                         return false;
@@ -199,10 +197,6 @@ public class PlayerServiceLogic implements PlayerService {
         }
         //인벤토리 선택시 표출되는 부분
 
-//        Ball ball = null;
-//        pokemon.setHp(50);
-//        int hp = pokemon.getHp();
-
         //턴제 방식 전투 및 몬스터볼(hp 양으로 차등)
         //결과( 포획 or
 //        capture.getCaptureResult(ball, pokemon, hp); // 인자안에 몬스터볼 종류
@@ -210,6 +204,143 @@ public class PlayerServiceLogic implements PlayerService {
 
     @Override
     public void fight() {
+    }
+
+    @Override
+    public void captureFight(Pokemon wildPokemon){
+        while(true) {
+
+            System.out.printf("<%s(와)과 배틀을 시작합니다>\n", wildPokemon.getName());
+            System.out.println();
+            Pokemon myPokemon = Inventory.getInstance().getPokemons().get(0);
+            System.out.println(myPokemon.getName() + "의 현재HP : " + myPokemon.getHp());
+            System.out.println("야생의 "+wildPokemon.getName() + "의 현재HP : " + wildPokemon.getHp());
+            System.out.println();
+            System.out.println("*"+player.getName()+"의 차례");
+            System.out.println();
+            System.out.println("0번:아이템");
+            myPokemon.printSkills();
+            System.out.println();
+            System.out.print("몇번 스킬을 사용할까요??\n:");
+
+            int select = scanner.nextInt();
+            if (select == 1) {
+                myPokemon.skill1(wildPokemon);
+            } else if (select == 2) {
+                myPokemon.skill2(wildPokemon);
+            } else if (select == 0) {
+                //인벤토리
+                whichItem();
+                break;
+
+            }
+            System.out.println();
+            System.out.println();
+            System.out.println("야생의 " + wildPokemon.getName() + "의 차례");
+            System.out.println();
+            int random = (int) (Math.random() * 3 + 1);
+           System.out.println(random);
+            if (random == 1) {
+                wildPokemon.skill1(myPokemon);
+            } else if (random == 2) {
+                wildPokemon.skill2(myPokemon);
+            } else {
+                wildPokemon.skill3(myPokemon);
+            }
+        }
+    }
+
+    private void whichItem() {
+        int select;
+        List<Integer> counts = countItems(getInventory().getItems());
+        System.out.println("------------------ << 인벤토리 >> -----------------");
+        System.out.printf("[몬스터볼 x%d | 수퍼볼 x%d | 하이퍼볼 x%d | 마스터볼 x%d]\n", counts.get(0), counts.get(1), counts.get(2), counts.get(3));
+        System.out.printf("[엘릭서 x%d | 파워엘릭서 x%d]\n", counts.get(4), counts.get(5));
+        System.out.println("-------------------------------------------------");
+        System.out.println("사용할 아이템을 선택해주세요.");
+        for (int i = 1; i <= inventory.getItems().size() ; i++) {
+            System.out.println(i + "번 : "  + inventory.getItems().get(i-1).getName());
+        }
+        while (true){
+            int select2 = scanner.nextInt();
+            switch (select2){
+                case 1:
+                    if(counts.get(0) == 0){
+                        System.out.println();
+                        System.out.println("보유하신 몬스터볼이 없습니다.");
+                        System.out.println();
+                        whichItem();
+                        return;
+                    }else{
+                        System.out.printf("%s(을)를 사용하시겠습니까?( Y / N )", inventory.getItems().get(0).getName());
+                        String yesOrNo = scanner.nextLine();
+                        System.out.println("yesOrNo = " + yesOrNo);
+                        if(yesOrNo.toLowerCase().equals("y")){
+                            System.out.println("몬스터볼을 사용합니다.");
+                        }else{
+                            return;
+                        }
+                        break;
+                    }
+                case 2:
+                    if(counts.get(1) == 0){
+                        System.out.println();
+                        System.out.println("보유하신 수퍼볼이 없습니다.");
+                        System.out.println();
+                        whichItem();
+                        return;
+                    }else{
+                        System.out.println("수퍼볼을 사용합니다.");
+                        break;
+                    }
+                case 3:
+                    if(counts.get(2) == 0){
+                        System.out.println();
+                        System.out.println("보유하신 하이퍼볼이 없습니다.");
+                        System.out.println();
+                        whichItem();
+                        return;
+                    }else{
+                        System.out.println("하이퍼볼을 사용합니다.");
+                        break;
+                    }
+                case 4:
+                    if(counts.get(3) == 0){
+                        System.out.println();
+                        System.out.println("보유하신 마스터볼이 없습니다.");
+                        System.out.println();
+                        whichItem();
+                        return;
+                    }else{
+                        System.out.println("마스터볼을 사용합니다.");
+                        break;
+
+                    }
+                case 5:
+                    if(counts.get(4) == 0){
+                        System.out.println();
+                        System.out.println("보유하신 엘릭서가 없습니다.");
+                        System.out.println();
+                        whichItem();
+                        return;
+                    }else{
+                        System.out.println("엘릭서를 사용합니다.");
+                        break;
+                    }
+                case 6:
+                    if(counts.get(5) == 0){
+                        System.out.println();
+                        System.out.println("보유하신 파워엘릭서가 없습니다.");
+                        System.out.println();
+                        whichItem();
+                        return;
+                    }else{
+                        System.out.println("파워엘릭서를 사용합니다.");
+                        break;
+                    }
+            }
+
+        }
     }
 
     @Override

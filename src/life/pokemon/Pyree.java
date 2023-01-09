@@ -6,6 +6,12 @@ public class Pyree extends Pokemon{
     }
 
     @Override
+    public void printSkills() {
+        String skillNames = "1번:몸통박치기\n2번:백반볼트\n";
+        System.out.print(skillNames);
+    }
+
+    @Override
     public void skill1(Pokemon pokemon) {
         useSkill("%s(이)가 스킬1을 사용했습니다.\n", pokemon, 10);
     }
