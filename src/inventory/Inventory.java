@@ -16,8 +16,7 @@ public class Inventory {
     private static Inventory inventoryInstance;
     private List<Item> items;
     private List<Pokemon> pokemons;
-
-    public Inventory(){
+    private Inventory(){
         this.items = new ArrayList<>();
         this.pokemons = new ArrayList<>();
         initializeInventory();

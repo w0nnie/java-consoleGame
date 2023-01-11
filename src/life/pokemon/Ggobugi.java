@@ -7,7 +7,7 @@ public class Ggobugi extends Pokemon{
 
     @Override
     public void printSkills() {
-        String skillNames = "1번:덩굴채찍\n2번:김밥말이\n";
+        String skillNames = "1번:스킬1\n2번:스킬2\n3번:스킬3\n";
         System.out.print(skillNames);
     }
 
@@ -29,6 +29,6 @@ public class Ggobugi extends Pokemon{
     private void useSkill(String format, Pokemon pokemon, int damage) {
         System.out.printf(format, this.getName());
         pokemon.setHp(pokemon.getHp() - damage);
-        System.out.printf("%s의 남은 체력 : %d\n", pokemon.getName(), pokemon.getHp());
+        System.out.printf("(상대) %s의 남은 체력 : %d\n", pokemon.getName(), pokemon.getHp());
     }
 }

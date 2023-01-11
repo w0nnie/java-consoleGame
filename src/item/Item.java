@@ -19,6 +19,9 @@ public abstract class Item {
         return quantity;
     }
 
+    public void setQuantity(int quantity) {
+    }
+
     public void increaseQuantity() {
         this.quantity += 1;
     }
